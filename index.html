@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>USWA CLASS PORTAL | 100 Interactive Boxes</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0b1120 0%, #19223c 100%);
+      transition: all 0.2s ease;
+    }
+
+    /* ---------- LOGIN PAGE (animated & colorful) ---------- */
+    .login-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+      background-size: 200% 200%;
+      animation: gradientFlow 12s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(2px);
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.6s;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%;}
+      50% { background-position: 100% 50%;}
+      100% { background-position: 0% 50%;}
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(14px);
+      border-radius: 48px;
+      padding: 2.8rem 2.5rem;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.3);
+      text-align: center;
+      transition: transform 0.3s ease;
+      animation: floatCard 1.8s ease-out;
+    }
+
+    @keyframes floatCard {
+      0% { opacity: 0; transform: translateY(40px) scale(0.96);}
+      100% { opacity: 1; transform: translateY(0) scale(1);}
+    }
+
+    .glass-card h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #ffe6b0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .login-sub {
+      color: rgba(255,255,240,0.9);
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .input-group {
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 600;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 60px;
+      background: rgba(255,255,255,0.85);
+      font-size: 1rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .input-group input:focus {
+      background: white;
+      box-shadow: 0 0 0 3px rgba(255,215,0,0.6);
+    }
+
+    .login-btn {
+      background: linear-gradient(95deg, #ff7e5e, #feb47b);
+      border: none;
+      width: 100%;
+      padding: 14px;
+      border-radius: 60px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.02);
+      background: linear-gradient(95deg, #ff6a48, #ffa25e);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.3);
+    }
+
+    .error-msg {
+      color: #ffd966;
+      font-weight: 600;
+      background: rgba(0,0,0,0.5);
+      padding: 8px;
+      border-radius: 40px;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- MAIN PORTAL (hidden until login) ---------- */
+    .portal-main {
+      display: none;
+      padding: 2rem 1.5rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .portal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .portal-header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(125deg, #FFE6B0, #FFB347, #FF6A5C);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .portal-header p {
+      color: #cbd5e6;
+      margin-top: 8px;
+      font-size: 1.1rem;
+    }
+
+    /* file upload section (extra utility) */
+    .global-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-util {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 10px 20px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,215,0,0.4);
+      color: #ffefc0;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-util:hover {
+      background: rgba(255,215,0,0.3);
+      color: white;
+    }
+
+    /* GRID: 100 boxes */
+    .boxes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    /* individual card/box */
+    .media-box {
+      background: rgba(20, 30, 55, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,200,100,0.3);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .media-box:hover {
+      transform: translateY(-5px);
+      border-color: #ffb347;
+      box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+      background: rgba(30, 42, 72, 0.8);
+    }
+
+    .box-header {
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: linear-gradient(95deg, #ffd89b, #c7e9fb);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .box-header i {
+      color: #ffb347;
+    }
+
+    .photo-preview-area {
+      background: #0f1422;
+      border-radius: 20px;
+      min-height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+      border: 1px dashed #ffb34770;
+    }
+
+    .preview-img {
+      max-width: 100%;
+      max-height: 150px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .empty-photo {
+      color: #8f9bb3;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .file-input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .custom-file-label {
+      background: #2a3650;
+      text-align: center;
+      padding: 8px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #ffeaac;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #ffb34760;
+    }
+
+    .custom-file-label:hover {
+      background: #3f4d70;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .publish-btn {
+      background: linear-gradient(95deg, #4c6ef5, #8250df);
+      border: none;
+      border-radius: 40px;
+      padding: 8px 0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 6px 0;
+      transition: 0.2s;
+    }
+
+    .publish-btn:hover {
+      background: linear-gradient(95deg, #5f7bf6, #9b6df5);
+      transform: scale(0.98);
+    }
+
+    .download-btn {
+      background: rgba(30, 40, 60, 0.9);
+      border: 1px solid #ffb347;
+      border-radius: 40px;
+      padding: 6px 0;
+      color: #ffdfa5;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: 0.2s;
+      text-align: center;
+    }
+
+    .download-btn:hover {
+      background: #ffb347;
+      color: #1e1e2f;
+    }
+
+    .file-section {
+      margin-top: 15px;
+      border-top: 1px solid rgba(255,200,120,0.3);
+      padding-top: 12px;
+    }
+
+    .file-list {
+      background: #0b0f1c80;
+      border-radius: 18px;
+      padding: 8px;
+      font-size: 0.75rem;
+      word-break: break-all;
+      max-height: 90px;
+      overflow-y: auto;
+    }
+
+    .single-file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      margin: 5px 0;
+      padding: 5px 8px;
+      border-radius: 28px;
+    }
+
+    .file-name {
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #cbd5e6;
+    }
+
+    .download-file-btn {
+      background: none;
+      border: none;
+      color: #ffb347;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .add-file-btn {
+      background: #2d3a5e;
+      border-radius: 30px;
+      padding: 6px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #ffecb3;
+      width: 100%;
+      margin-top: 8px;
+      cursor: pointer;
+      border: none;
+    }
+
+    hr {
+      border-color: #ffb34730;
+      margin: 5px 0;
+    }
+
+    .logout-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #dc2626cc;
+      backdrop-filter: blur(8px);
+      padding: 12px 18px;
+      border-radius: 40px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      z-index: 99;
+      transition: 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    @media (max-width: 700px) {
+      .boxes-grid { gap: 1rem; }
+      .portal-header h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SECTION (animated & colorful) -->
+<div id="loginPage" class="login-container">
+  <div class="glass-card">
+    <h2><i class="fas fa-gem"></i> WELCOME</h2>
+    <div class="login-sub">Enter your magical username</div>
+    <div class="input-group">
+      <label><i class="fas fa-user-astronaut"></i> Username</label>
+      <input type="text" id="usernameInput" placeholder="e.g., USWA" autocomplete="off">
+    </div>
+    <button id="loginBtn" class="login-btn"><i class="fas fa-key"></i> UNLOCK PORTAL</button>
+    <div id="loginError" class="error-msg" style="display: none;">❌ Only username "USWA" grants access (case-sensitive)</div>
+  </div>
+</div>
+
+<!-- MAIN PORTAL SECTION (hidden initially) -->
+<div id="portalMain" class="portal-main">
+  <div class="portal-header">
+    <h1><i class="fas fa-chalkboard-user"></i> USWA CLASS PORTAL</h1>
+    <p>✨ 100 interactive boxes — upload photos & files, publish & download ✨</p>
+  </div>
+  <div class="global-actions">
+    <button id="globalLogoutBtn" class="btn-util"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+
+  <!-- 100 Boxes Grid -->
+  <div id="boxesContainer" class="boxes-grid"></div>
+  
+  <button id="logoutFab" class="logout-btn"><i class="fas fa-door-open"></i> Exit Portal</button>
+</div>
+
+<script>
+  // --- State Management for 100 boxes (photo + files array)
+  // Each box: { photoDataURL: string|null, files: Array<{name, dataURL, type}> }
+  const BOX_COUNT = 100;   // ✅ changed from 40 to 100 as requested
+  let boxesData = [];
+
+  // Helper: load from localStorage if exists
+  function loadStorage() {
+    const stored = localStorage.getItem('USWA_Portal_Boxes');
+    if(stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if(Array.isArray(parsed) && parsed.length === BOX_COUNT) {
+          boxesData = parsed;
+          return;
+        }
+      } catch(e) {}
+    }
+    // init fresh
+    boxesData = [];
+    for(let i=0; i<BOX_COUNT; i++) {
+      boxesData.push({ photoDataURL: null, files: [] });
+    }
+  }
+
+  function saveStorage() {
+    localStorage.setItem('USWA_Portal_Boxes', JSON.stringify(boxesData));
+  }
+
+  // Convert file to dataURL (promise)
+  function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Render all boxes (efficient rebuild)
+  function renderBoxes() {
+    const container = document.getElementById('boxesContainer');
+    if(!container) return;
+    container.innerHTML = '';
+    for(let i=0; i<BOX_COUNT; i++) {
+      const box = boxesData[i];
+      const boxDiv = document.createElement('div');
+      boxDiv.className = 'media-box';
+      
+      // Header with index
+      const header = document.createElement('div');
+      header.className = 'box-header';
+      header.innerHTML = `<i class="fas fa-cube"></i> Box ${i+1} · Media Vault`;
+      
+      // PHOTO section
+      const photoArea = document.createElement('div');
+      photoArea.className = 'photo-preview-area';
+      if(box.photoDataURL) {
+        const img = document.createElement('img');
+        img.src = box.photoDataURL;
+        img.className = 'preview-img';
+        img.alt = 'published photo';
+        photoArea.appendChild(img);
+      } else {
+        const emptyDiv = document.createElement('div');
+        emptyDiv.className = 'empty-photo';
+        emptyDiv.innerHTML = '<i class="fas fa-image"></i> No photo published<br>Upload & publish';
+        photoArea.appendChild(emptyDiv);
+      }
+      
+      // photo upload input (hidden)
+      const photoInputId = `photoInput_${i}`;
+      const photoInput = document.createElement('input');
+      photoInput.type = 'file';
+      photoInput.accept = 'image/*';
+      photoInput.id = photoInputId;
+      photoInput.style.display = 'none';
+      
+      const photoLabel = document.createElement('label');
+      photoLabel.htmlFor = photoInputId;
+      photoLabel.className = 'custom-file-label';
+      photoLabel.innerHTML = '<i class="fas fa-cloud-upload-alt"></i> Browse Photo';
+      
+      const publishPhotoBtn = document.createElement('button');
+      publishPhotoBtn.textContent = '📸 Publish Photo';
+      publishPhotoBtn.className = 'publish-btn';
+      
+      // download photo button (only if photo exists)
+      const downloadPhotoBtn = document.createElement('button');
+      if(box.photoDataURL) {
+        downloadPhotoBtn.textContent = '⬇️ Download Photo';
+        downloadPhotoBtn.className = 'download-btn';
+        downloadPhotoBtn.onclick = (e) => {
+          e.preventDefault();
+          if(box.photoDataURL) {
+            const link = document.createElement('a');
+            link.href = box.photoDataURL;
+            link.download = `box_${i+1}_photo.jpg`;
+            link.click();
+          }
+        };
+      } else {
+        downloadPhotoBtn.style.display = 'none';
+      }
+      
+      // ----- FILES section -----
+      const fileSection = document.createElement('div');
+      fileSection.className = 'file-section';
+      const fileLabel = document.createElement('div');
+      fileLabel.innerHTML = '<i class="fas fa-paperclip"></i> Attached Files';
+      fileLabel.style.fontWeight = '600';
+      fileLabel.style.marginBottom = '8px';
+      fileLabel.style.color = '#ffdca8';
+      
+      const fileListDiv = document.createElement('div');
+      fileListDiv.className = 'file-list';
+      function refreshFileList() {
+        fileListDiv.innerHTML = '';
+        const currentFiles = boxesData[i].files;
+        if(currentFiles.length === 0) {
+          const emptyMsg = document.createElement('div');
+          emptyMsg.textContent = '📂 No files yet. Add & publish.';
+          emptyMsg.style.color = '#7e8aa8';
+          emptyMsg.style.fontSize = '0.7rem';
+          emptyMsg.style.padding = '5px';
+          fileListDiv.appendChild(emptyMsg);
+        } else {
+          currentFiles.forEach((file, idx) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'single-file-item';
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'file-name';
+            nameSpan.title = file.name;
+            nameSpan.textContent = file.name.length > 22 ? file.name.slice(0,19)+'...' : file.name;
+            const downBtn = document.createElement('button');
+            downBtn.innerHTML = '<i class="fas fa-download"></i>';
+            downBtn.className = 'download-file-btn';
+            downBtn.onclick = (e) => {
+              e.stopPropagation();
+              const a = document.createElement('a');
+              a.href = file.dataURL;
+              a.download = file.name;
+              a.click();
+            };
+            fileItem.appendChild(nameSpan);
+            fileItem.appendChild(downBtn);
+            fileListDiv.appendChild(fileItem);
+          });
+        }
+      }
+      
+      // file input for this box (multiple allowed? requirement: add files, but we will handle sequential)
+      const fileInputId = `fileInput_${i}`;
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.id = fileInputId;
+      fileInput.style.display = 'none';
+      fileInput.accept = '*/*';   // any file type
+      
+      const addFileBtn = document.createElement('button');
+      addFileBtn.textContent = '+ Add File (from PC)';
+      addFileBtn.className = 'add-file-btn';
+      
+      // publish file logic: we will treat "adding" as immediate publish because requirement: each box can add files and publish (available to download). We'll add file to files array directly.
+      addFileBtn.onclick = () => {
+        fileInput.click();
+      };
+      
+      fileInput.onchange = async (e) => {
+        if(fileInput.files && fileInput.files.length > 0) {
+          const newFile = fileInput.files[0];
+          const dataURL = await fileToDataURL(newFile);
+          boxesData[i].files.push({ name: newFile.name, dataURL: dataURL, type: newFile.type });
+          saveStorage();
+          refreshFileList();
+          // update downloadPhotoBtn visibility (no change, but re-render? we can update just file list. keep downloadPhotoBtn same)
+          // BUT also photo part unchanged, so no full render needed. we update fileList and save.
+          fileInput.value = ''; // allow re-upload same file
+        }
+      };
+      
+      // photo publish logic
+      let tempSelectedPhotoDataURL = null;
+      photoInput.onchange = async (e) => {
+        if(photoInput.files && photoInput.files[0]) {
+          const file = photoInput.files[0];
+          const data = await fileToDataURL(file);
+          tempSelectedPhotoDataURL = data;
+          // visual hint: we could show temporary but wait for publish click
+          alert(`Photo "${file.name}" selected. Click "Publish Photo" to set.`);
+        }
+      };
+      
+      publishPhotoBtn.onclick = async () => {
+        if(tempSelectedPhotoDataURL) {
+          boxesData[i].photoDataURL = tempSelectedPhotoDataURL;
+          saveStorage();
+          renderBoxes();  // re-render to show photo and download button
+          tempSelectedPhotoDataURL = null;
+        } else if(photoInput.files && photoInput.files[0] && !tempSelectedPhotoDataURL) {
+          // if file selected but not stored? re-read
+          const fileNow = photoInput.files[0];
+          if(fileNow) {
+            const dataNow = await fileToDataURL(fileNow);
+            boxesData[i].photoDataURL = dataNow;
+            saveStorage();
+            renderBoxes();
+          } else {
+            alert("Please browse a photo first.");
+          }
+        } else {
+          alert("Please choose a photo from PC using 'Browse Photo' before publishing.");
+        }
+        photoInput.value = ''; 
+        tempSelectedPhotoDataURL = null;
+      };
+      
+      // Append all parts
+      const photoControlsDiv = document.createElement('div');
+      photoControlsDiv.className = 'file-input-row';
+      photoControlsDiv.appendChild(photoLabel);
+      photoControlsDiv.appendChild(photoInput);
+      photoControlsDiv.appendChild(publishPhotoBtn);
+      if(box.photoDataURL) photoControlsDiv.appendChild(downloadPhotoBtn);
+      else {
+        const dummyDownload = document.createElement('button');
+        dummyDownload.style.display = 'none';
+        photoControlsDiv.appendChild(dummyDownload);
+      }
+      
+      // file area construction
+      refreshFileList(); // initial load
+      fileSection.appendChild(fileLabel);
+      fileSection.appendChild(fileListDiv);
+      const fileUploadRow = document.createElement('div');
+      fileUploadRow.style.display = 'flex';
+      fileUploadRow.style.gap = '8px';
+      fileUploadRow.style.marginTop = '8px';
+      fileUploadRow.appendChild(addFileBtn);
+      fileUploadRow.appendChild(fileInput);
+      fileSection.appendChild(fileUploadRow);
+      
+      boxDiv.appendChild(header);
+      boxDiv.appendChild(photoArea);
+      boxDiv.appendChild(photoControlsDiv);
+      boxDiv.appendChild(fileSection);
+      container.appendChild(boxDiv);
+    }
+  }
+  
+  // full refresh portal data & re-render
+  function refreshEntirePortal() {
+    loadStorage();
+    renderBoxes();
+  }
+  
+  // --- Login logic ---
+  const loginPage = document.getElementById('loginPage');
+  const portalMain = document.getElementById('portalMain');
+  const loginBtn = document.getElementById('loginBtn');
+  const usernameField = document.getElementById('usernameInput');
+  const loginErrorDiv = document.getElementById('loginError');
+  
+  function doLogin() {
+    const username = usernameField.value.trim();
+    if(username === "USWA") {
+      // success: hide login, show portal
+      loginPage.style.opacity = '0';
+      loginPage.style.visibility = 'hidden';
+      setTimeout(() => {
+        loginPage.style.display = 'none';
+        portalMain.style.display = 'block';
+        // load data from storage & render boxes
+        refreshEntirePortal();
+      }, 400);
+      loginErrorDiv.style.display = 'none';
+    } else {
+      loginErrorDiv.style.display = 'block';
+      loginErrorDiv.innerText = '❌ Access denied: Only "USWA" can enter this portal.';
+      usernameField.classList.add('error-shake');
+      setTimeout(() => usernameField.classList.remove('error-shake'), 500);
+    }
+  }
+  
+  loginBtn.addEventListener('click', doLogin);
+  usernameField.addEventListener('keypress', (e) => { if(e.key === 'Enter') doLogin(); });
+  
+  // Logout functions (both logout buttons)
+  function logout() {
+    portalMain.style.display = 'none';
+    loginPage.style.display = 'flex';
+    loginPage.style.opacity = '1';
+    loginPage.style.visibility = 'visible';
+    usernameField.value = '';
+    loginErrorDiv.style.display = 'none';
+    // clear temp selections, but keep saved storage for next login (good)
+  }
+  
+  const globalLogout = document.getElementById('globalLogoutBtn');
+  const fabLogout = document.getElementById('logoutFab');
+  if(globalLogout) globalLogout.addEventListener('click', logout);
+  if(fabLogout) fabLogout.addEventListener('click', logout);
+  
+  // initial state: login visible, portal hidden
+  portalMain.style.display = 'none';
+  loginPage.style.display = 'flex';
+  
+  // preload storage but not render until login
+  loadStorage();
+  
+  // additional style for error shake
+  const styleShake = document.createElement('style');
+  styleShake.textContent = `.error-shake { animation: shake 0.3s ease-in-out 0s 2; } @keyframes shake { 0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-6px); } 75%{ transform:translateX(6px); } }`;
+  document.head.appendChild(styleShake);
+</script>
+</body>
+</html>
